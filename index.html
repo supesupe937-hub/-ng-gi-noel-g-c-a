@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ông Già Noel – Đặt lịch & Chọn quà</title>
+<style>
+:root{--red:#b91f32;--deep:#761827;--green:#176b45;--cream:#fffaf1;--gold:#e8b85c;--ink:#292522;--muted:#756d66;--line:#eadfd2}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:#fff}
+header{background:linear-gradient(120deg,#7d1725,#c32b3d);color:#fff;padding:18px max(20px,calc((100% - 1120px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:900;font-size:21px;letter-spacing:.2px}.brand small{display:block;font-size:11px;font-weight:500;opacity:.85}
+nav{display:flex;gap:18px;flex-wrap:wrap}nav a{color:#fff;text-decoration:none;font-size:14px}
+.hero{background:radial-gradient(circle at 80% 30%,#f6d9a1 0 9%,transparent 10%),linear-gradient(115deg,#fff8e9,#fbe9df);padding:56px 20px}
+.wrap{max-width:1120px;margin:auto}.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.eyebrow{color:var(--green);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;font-size:12px}
+h1{font-size:clamp(34px,5vw,58px);line-height:1.05;margin:12px 0;color:var(--deep)}.hero p{color:#65564c;max-width:560px;line-height:1.7}
+.hero-art{background:linear-gradient(145deg,#176b45,#0c4c32);border-radius:28px;padding:28px;color:white;min-height:260px;display:grid;place-items:center;text-align:center;box-shadow:0 18px 45px #53101b22}
+.santa{font-size:100px;line-height:1}.hero-art strong{display:block;font-size:22px;margin-top:10px}
+.btn{border:0;border-radius:12px;padding:12px 18px;background:var(--red);color:white;font-weight:800;cursor:pointer}.btn:hover{filter:brightness(.94)}.btn.secondary{background:#fff;color:var(--deep);border:1px solid var(--line)}.btn.green{background:var(--green)}
+main{padding:34px 20px 70px;background:var(--cream)}section{margin:0 auto 30px;max-width:1120px}.section-title{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}.section-title h2{margin:0;color:var(--deep);font-size:27px}.section-title p{margin:5px 0 0;color:var(--muted);font-size:14px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 6px 20px #4a241008}.card .emoji{font-size:38px}.card h3{margin:8px 0 5px}.price{font-weight:900;color:var(--red);font-size:19px}.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.product{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}.product .pic{height:115px;display:grid;place-items:center;background:linear-gradient(135deg,#f8e6d4,#fff4e7);font-size:54px}.product .info{padding:13px}.product h3{font-size:15px;margin:0 0 5px}.product .row{display:flex;align-items:center;justify-content:space-between;gap:8px}.product button{padding:8px 11px;border-radius:9px;font-size:12px}
+.layout{display:grid;grid-template-columns:1fr 330px;gap:18px;align-items:start}.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:20px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}label{font-size:13px;font-weight:750;display:block;margin-bottom:6px}input,select,textarea{width:100%;border:1px solid #d9cec2;border-radius:10px;padding:11px;font:inherit;background:#fff}textarea{min-height:80px;resize:vertical}.field.full{grid-column:1/-1}.summary-line{display:flex;justify-content:space-between;gap:10px;margin:10px 0;font-size:14px}.total{border-top:1px solid var(--line);padding-top:13px;font-weight:900;font-size:20px;color:var(--deep)}.cart-empty{color:var(--muted);font-size:13px}
+.notice{background:#fff4d9;border:1px solid #f0d99e;padding:12px;border-radius:12px;font-size:13px;color:#715321;line-height:1.5}
+.admin{display:none}.admin.show{display:block}.orders{width:100%;border-collapse:collapse;font-size:13px}.orders th,.orders td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.status{padding:4px 8px;border-radius:20px;background:#fff1d7;color:#80520d;font-size:11px;font-weight:800}
+footer{background:#261f1d;color:#eee4dc;padding:26px 20px;text-align:center;font-size:13px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#1c392b;color:#fff;padding:12px 18px;border-radius:12px;display:none;z-index:5;box-shadow:0 8px 30px #0003}
+@media(max-width:760px){header{align-items:flex-start;flex-direction:column}.hero-grid,.layout{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.product-grid{grid-template-columns:repeat(2,1fr)}.hero{padding:38px 18px}.hero-art{min-height:190px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.section-title{align-items:start;flex-direction:column}.panel{padding:16px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<header><div class="brand">🎅 ÔNG GIÀ NOEL <small>Đặt lịch – Chọn quà – Giao niềm vui</small></div><nav><a href="#goi">Gói dịch vụ</a><a href="#qua">Chọn quà</a><a href="#datlich">Đặt lịch</a><a href="admin.html">Đăng nhập quản trị</a></nav></header>
+<div class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">Mùa Giáng sinh ấm áp</div><h1>Mang phép màu Noel<br>đến tận nhà bạn</h1><p>Chọn ông già Noel, chọn món quà bé yêu thích và đặt lịch ghé thăm. Một trải nghiệm Giáng sinh đáng nhớ cho cả gia đình.</p><a class="btn" href="#datlich" style="display:inline-block;text-decoration:none">Đặt ông già Noel ngay</a></div><div class="hero-art"><div><div class="santa">🎅</div><strong>Ho Ho Ho! Merry Christmas</strong><div style="opacity:.85;margin-top:6px">Quà xinh • Lời chúc • Khoảnh khắc vui</div></div></div></div></div>
+<main>
+<section id="goi"><div class="section-title"><div><h2>Chọn gói dịch vụ</h2><p>Chọn trải nghiệm phù hợp với gia đình hoặc sự kiện của bạn.</p></div></div><div class="cards" id="packageCards"></div></section>
+<section id="qua"><div class="section-title"><div><h2>Quầy quà Giáng sinh</h2><p>Thêm quà vào giỏ hoặc để trống nếu bạn tự chuẩn bị quà.</p></div></div><div class="product-grid" id="products"></div><div class="notice" style="margin-top:14px">🎀 Bạn tự chuẩn bị quà? Chọn mục “Tôi tự chuẩn bị quà” ở phần đặt lịch và ghi chú cách bàn giao. Nhân viên sẽ liên hệ xác nhận.</div></section>
+<section id="datlich"><div class="section-title"><div><h2>Thông tin đặt lịch</h2><p>Điền thông tin để chúng tôi liên hệ xác nhận lịch và địa chỉ.</p></div></div><div class="layout"><div class="panel"><form id="bookingForm"><div class="form-grid">
+<div class="field"><label>Họ tên người đặt *</label><input name="customer" required placeholder="Nguyễn Văn A"></div>
+<div class="field"><label>Số điện thoại *</label><input name="phone" required inputmode="tel" placeholder="09xxxxxxxx"></div>
+<div class="field"><label>Tên bé / người nhận</label><input name="recipient" placeholder="Tên bé"></div>
+<div class="field"><label>Ngày muốn ghé *</label><input name="date" type="date" required></div>
+<div class="field"><label>Khung giờ *</label><select name="time" required><option value="">Chọn giờ</option><option>17:00–18:00</option><option>18:00–19:00</option><option>19:00–20:00</option><option>20:00–21:00</option><option>21:00–22:00</option></select></div>
+<div class="field"><label>Gói dịch vụ *</label><select id="packageSelect" name="package" required><option value="">Chọn gói dịch vụ</option><option value="Gói trao quà" data-price="199000">Gói trao quà – 199.000đ</option><option value="Gói giao lưu & chụp ảnh" data-price="299000">Gói giao lưu & chụp ảnh – 299.000đ</option><option value="Gói sự kiện" data-price="499000">Gói sự kiện – 499.000đ</option></select></div>
+<div class="field full"><label>Địa chỉ đến giao quà *</label><input name="address" required placeholder="Số nhà, đường, phường/xã, quận/huyện"></div>
+<div class="field"><label>Hình thức quà</label><select name="giftMode" id="giftMode"><option value="Mua quà trên website">Mua quà trên website</option><option value="Khách tự chuẩn bị quà">Khách tự chuẩn bị quà</option><option value="Không cần quà">Không cần quà</option></select></div>
+<div class="field"><label>Ngân sách / ghi chú quà</label><input name="giftNote" placeholder="Ví dụ: quà cho bé 5 tuổi"></div>
+<div class="field full"><label>Lời nhắn ông già Noel sẽ đọc</label><textarea name="message" placeholder="Ví dụ: Chúc con luôn chăm ngoan, học giỏi..."></textarea></div>
+<div class="field full"><label>Ghi chú thêm</label><textarea name="note" placeholder="Hướng dẫn tìm nhà, yêu cầu đặc biệt..."></textarea></div>
+</div><p class="muted">* Các trường có dấu sao là bắt buộc. Đơn hàng sẽ ở trạng thái chờ xác nhận.</p><button class="btn green" type="submit">Gửi yêu cầu đặt lịch</button></form></div>
+<aside class="panel"><h3 style="margin-top:0">🛒 Giỏ quà của bạn</h3><div id="cartItems" class="cart-empty">Chưa chọn món quà nào.</div><div class="summary-line"><span>Phí dịch vụ</span><strong id="servicePrice">0đ</strong></div><div class="summary-line"><span>Tiền quà</span><strong id="giftPrice">0đ</strong></div><div class="summary-line total"><span>Tạm tính</span><span id="grandTotal">0đ</span></div><button class="btn secondary" style="width:100%;margin-top:12px" onclick="clearCart()">Xóa giỏ quà</button><p class="muted">Phí di chuyển (nếu có) sẽ được nhân viên xác nhận sau khi kiểm tra địa chỉ.</p></aside></div></section>
+
+</main><footer>© 2026 Ông Già Noel • Website mẫu đặt lịch và chọn quà Giáng sinh<br>Hotline: bổ sung số điện thoại kinh doanh của bạn</footer><div class="toast" id="toast"></div>
+<script>
+// 1) Dán URL và anon/publishable key của dự án Supabase vào đây.
+const SUPABASE_URL = 'https://olnnowwvobfczyohflyn.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_7dgtL5Z11OsWl1oz7Y7prQ_wN0rN_lZ';
+const supabaseReady = SUPABASE_URL.startsWith('https://') && !SUPABASE_ANON_KEY.includes('PASTE_');
+const db = supabaseReady ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+const defaultPackages=[
+ {name:'Gói trao quà',price:199000,emoji:'🎁',desc:'Ông già Noel đến tận nơi, gọi tên bé và trao quà.'},
+ {name:'Gói giao lưu & chụp ảnh',price:299000,emoji:'📸',desc:'Trao quà, trò chuyện, chụp ảnh lưu niệm cùng gia đình.'},
+ {name:'Gói sự kiện',price:499000,emoji:'🎉',desc:'Phù hợp tiệc gia đình, lớp học, cửa hàng và công ty.'}
+];
+const defaultProducts=[
+ {id:1,name:'Gấu bông Noel',price:150000,emoji:'🧸'},
+ {id:2,name:'Bộ xếp hình',price:220000,emoji:'🧩'},
+ {id:3,name:'Hộp bánh kẹo',price:100000,emoji:'🍬'},
+ {id:4,name:'Hộp quà cao cấp',price:350000,emoji:'🎁'},
+ {id:5,name:'Búp bê xinh xắn',price:180000,emoji:'🪆'},
+ {id:6,name:'Ô tô đồ chơi',price:120000,emoji:'🚗'}
+];
+let packages=defaultPackages.map(x=>({...x}));
+let products=defaultProducts.map(x=>({...x}));
+let cart=JSON.parse(localStorage.getItem('noelCart')||'[]');
+let cachedOrders=[];
+const money=n=>Number(n||0).toLocaleString('vi-VN')+'đ';
+function renderPackages(){document.getElementById('packageCards').innerHTML=packages.map(p=>`<div class=\"card\"><div class=\"emoji\">${p.emoji}</div><h3>${p.name}</h3><p class=\"muted\">${p.desc}</p><div class=\"price\">${money(p.price)}</div><button class=\"btn\" onclick=\"choosePackage('${p.name.replaceAll("'","\\'")}',${p.price})\">Chọn gói</button></div>`).join('');const sel=document.getElementById('packageSelect');const chosen=sel.value;sel.innerHTML='<option value=\"\">Chọn gói dịch vụ</option>'+packages.map(p=>`<option value=\"${p.name}\" data-price=\"${p.price}\">${p.name} – ${money(p.price)}</option>`).join('');sel.value=chosen;renderCart()}
+function renderProducts(){document.getElementById('products').innerHTML=products.map(p=>`<article class="product"><div class="pic">${p.emoji}</div><div class="info"><h3>${p.name}</h3><div class="row"><strong class="price" style="font-size:16px">${money(p.price)}</strong><button class="btn" onclick="addCart(${p.id})">+ Thêm</button></div></div></article>`).join('')}
+function addCart(id){const p=products.find(x=>x.id===id);const item=cart.find(x=>x.id===id);if(item)item.qty++;else cart.push({...p,qty:1});saveCart();toast('Đã thêm '+p.name+' vào giỏ')}
+function removeCart(id){cart=cart.filter(x=>x.id!==id);saveCart()}
+function clearCart(){cart=[];saveCart()}
+function saveCart(){localStorage.setItem('noelCart',JSON.stringify(cart));renderCart()}
+function renderCart(){const el=document.getElementById('cartItems');el.innerHTML=cart.length?cart.map(p=>`<div class="summary-line"><span>${p.emoji} ${p.name} × ${p.qty}<br><small class="muted">${money(p.price*p.qty)}</small></span><button class="btn secondary" style="padding:4px 8px" onclick="removeCart(${p.id})">Bỏ</button></div>`).join(''):'<span class="cart-empty">Chưa chọn món quà nào.</span>';const gift=cart.reduce((s,p)=>s+p.price*p.qty,0);const opt=document.querySelector('#packageSelect option:checked');const service=Number(opt?.dataset.price||0);document.getElementById('servicePrice').textContent=money(service);document.getElementById('giftPrice').textContent=money(gift);document.getElementById('grandTotal').textContent=money(service+gift)}
+function choosePackage(name,price){const s=document.getElementById('packageSelect');s.value=name;renderCart();document.getElementById('datlich').scrollIntoView({behavior:'smooth'});toast('Đã chọn '+name)}
+document.getElementById('packageSelect').addEventListener('change',renderCart);
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2800)}
+async function loadPublicPrices(){if(!db)return;const {data,error}=await db.from('site_settings').select('config').eq('id',true).maybeSingle();if(error){console.warn('Không tải được bảng giá từ Supabase:',error.message);return}if(data?.config){packages=data.config.packages||defaultPackages;products=data.config.products||defaultProducts;renderPackages();renderProducts();renderCart()}}
+document.getElementById('bookingForm').addEventListener('submit',async e=>{e.preventDefault();if(!db){toast('Website chưa kết nối hệ thống lưu đơn. Vui lòng thử lại sau.');return}const btn=e.target.querySelector('button[type="submit"]');btn.disabled=true;btn.textContent='Đang gửi...';try{const f=new FormData(e.target);const data=Object.fromEntries(f.entries());data.gifts=cart.map(p=>({id:p.id,name:p.name,qty:p.qty,price:p.price}));const service=Number(packages.find(p=>p.name===data.package)?.price||0);const gift=cart.reduce((s,p)=>s+p.price*p.qty,0);data.total=service+gift;data.status='Chờ xác nhận';const {error}=await db.from('orders').insert([data]);if(error){if(error.code==='23505')throw new Error('Khung giờ này vừa có khách đặt. Vui lòng chọn giờ khác.');throw error}toast('Đã gửi yêu cầu! Đơn đã được lưu. Chúng tôi sẽ liên hệ xác nhận.');e.target.reset();cart=[];saveCart();}catch(err){toast('Chưa gửi được đơn: '+(err.message||'Lỗi kết nối'))}finally{btn.disabled=false;btn.textContent='Gửi yêu cầu đặt lịch'}});
+renderPackages();renderProducts();renderCart();loadPublicPrices();
+</script></body></html>

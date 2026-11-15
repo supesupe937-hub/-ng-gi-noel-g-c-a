@@ -1,0 +1,32 @@
+HUONG DAN CAI DAT - ONG GIA NOEL 2026 (BAN QUAN TRI GIA)
+
+A. CAP NHAT DATABASE SUPABASE
+1. Dang nhap https://supabase.com va mo dung project cua website.
+2. Vao SQL Editor > New query.
+3. Mo file supabase-setup.sql trong goi nay, copy toan bo va dan vao SQL Editor > Run.
+   - Co the chay lai file nay de cap nhat chinh sach va them bang gia.
+4. Vao Authentication > Users > Add user, tao email/mat khau rieng cho chu shop.
+5. Sao chep UUID (ID) cua user vua tao.
+6. Vao SQL Editor, chay lenh sau, thay UUID mau bang UUID that:
+   insert into public.admin_users(user_id) values ('UUID-USER-ADMIN-CUA-BAN');
+   Day la buoc cap quyen bat buoc. Tai khoan chi tao trong Authentication ma chua duoc them vao admin_users thi KHONG co quyen quan tri.
+
+B. NOI WEBSITE VOI SUPABASE
+Website trong goi nay da duoc dien san Project URL va Publishable key ban cung cap. Khong can sua hai dong cau hinh.
+KHONG dua service_role/secret key vao HTML.
+
+C. XUAT BAN WEBSITE VA TRANG QUAN TRI RIENG
+1. Tai len hosting ca hai file index.html va admin.html (dat cung mot thu muc).
+2. Khach truy cap website chinh de xem dich vu va dat lich.
+3. Chu shop mo dia-chi-website/admin.html de dang nhap trang quan tri rieng.
+4. Dang nhap bang email/mat khau da tao trong Supabase va da duoc them UUID vao bang public.admin_users.
+5. Trang quan tri co danh sach don, tim kiem/loc, xem chi tiet, cap nhat trang thai, thong ke, xuat CSV va sua bang gia.
+6. Gia moi duoc luu vao Supabase va hien thi tren website khach hang.
+Luu y: Hai file index.html va admin.html phai duoc tai len cung mot thu muc. Neu key bi bao loi Invalid API key, kiem tra va thay Publishable key dung cua project trong ca hai file HTML.
+
+QUYEN VA BAO MAT
+- Khach hang: chi xem bang gia va tao don; khong doc danh sach don, khong sua gia.
+- Tai khoan dang nhap nhung KHONG nam trong public.admin_users: khong xem don va khong sua gia.
+- Chi UUID duoc them vao public.admin_users moi duoc xem don va thay doi bang gia.
+- Database tu tinh lai tong tien don theo bang gia hien tai, khong tin tong tien do trinh duyet khach gui len.
+- Khong chia se mat khau quan tri hoac service_role key.
